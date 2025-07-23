@@ -15,13 +15,13 @@
             color: #fff;
             overflow-x: hidden; /* Yatay kaydırmayı engelle */
             position: relative;
-            background-image: url('https://images.unsplash.com/photo-1506443432701-6d77ae3fc63d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Uzay Temalı Arka Plan */
+            background-image: url('https://images.unsplash.com/photo-1518066000714-cdcd82531032?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Yeni Uzay Temalı Arka Plan */
             background-size: cover;
             background-attachment: fixed; /* Parallax benzeri etki */
             background-position: center;
         }
 
-        /* Saydam Overlay */
+        /* Ana Arka Plan Overlay (Daha derin karanlık ve bulanıklık) */
         body::before {
             content: '';
             position: fixed;
@@ -29,56 +29,76 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Genel saydam siyah katman */
-            backdrop-filter: blur(5px); /* Arka planı hafif bulanıklaştır */
+            background-color: rgba(0, 0, 0, 0.8); /* Daha koyu saydam siyah katman */
+            backdrop-filter: blur(8px); /* Daha belirgin bulanıklık */
             z-index: -1;
         }
         
-        /* Neon Yeşil Tonları */
-        .text-neon-green { color: #00FF7F; } /* Ana vurgu */
+        /* Neon Yeşil Tonları ve Mor Geçişler */
+        .text-neon-green { color: #00FF7F; }
         .bg-neon-green { background-color: #00FF7F; }
         .hover\:bg-neon-green-light:hover { background-color: #39FF14; }
         .border-neon-green { border-color: #00FF7F; }
         
-        /* Glow Efektleri */
+        /* Glow Efektleri (Daha yoğun) */
         .glow {
-            text-shadow: 0 0 8px #00FF7F, 0 0 15px #00FF7F;
+            text-shadow: 0 0 10px #00FF7F, 0 0 20px #00FF7F, 0 0 30px rgba(0, 255, 127, 0.7);
         }
         .glow-on-hover:hover {
-            box-shadow: 0 0 15px #00FF7F, 0 0 25px rgba(0, 255, 127, 0.5);
+            box-shadow: 0 0 20px #00FF7F, 0 0 40px rgba(0, 255, 127, 0.7);
         }
         .card-glow:hover {
-            box-shadow: 0 0 20px rgba(0, 255, 127, 0.6);
+            box-shadow: 0 0 30px rgba(0, 255, 127, 0.8), 0 0 50px rgba(0, 255, 127, 0.5);
             border-color: #39FF14;
+            transform: translateY(-5px); /* Hafif yukarı kalkma */
         }
 
         /* Fütüristik Fontlar */
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
 
-        /* Arka Plan Efektleri - Matrix */
-        .matrix-bg {
+        /* Arka Plan Efektleri - Dinamik Veri Akışı */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(17,17,17,0.6) 100%);
+            border-bottom: 1px solid rgba(0, 255, 127, 0.5);
             position: relative;
-            z-index: 1; /* İçeriğin üstte kalması için */
+            overflow: hidden;
+            z-index: 1;
         }
-        /* Matrix efekti için ::before zaten body'de kullanıldı, bu sınıf sadece z-index için */
+        .hero-gradient::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="transparent"/><path d="M0 0 L50 100 L100 0 Z" fill="rgba(0,255,127,0.05)"/></svg>'); /* Hafif üçgen desen */
+            background-size: 50px 50px;
+            opacity: 0.1;
+            animation: flow-pattern 30s linear infinite;
+            z-index: -1;
+        }
+        @keyframes flow-pattern {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
+        }
 
         /* Sayfa yüklenirken "veri yükleniyor" efekti */
         .loading-animation {
             animation: pulse-loading 1.5s infinite alternate;
         }
         @keyframes pulse-loading {
-            0% { opacity: 0.5; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.05); }
+            0% { opacity: 0.6; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
         }
 
-        /* Scroll ile beliren bloklar (Fade-in / Slide-up) */
+        /* Scroll ile beliren bloklar (Daha yumuşak) */
         .hidden-on-load {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(40px);
         }
         .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 1s ease-out forwards;
         }
         @keyframes fadeInUp {
             to {
@@ -92,18 +112,22 @@
         .animate-delay-3 { animation-delay: 0.6s; }
         .animate-delay-4 { animation-delay: 0.8s; }
         .animate-delay-5 { animation-delay: 1.0s; }
+        .animate-delay-6 { animation-delay: 1.2s; }
 
-        /* Saydam Kartlar ve Paneller */
+        /* Yarı Saydam Oval Kayan Pencereler (Ana Bileşenler) */
         .glass-panel {
-            background-color: rgba(17, 24, 39, 0.7); /* Antrasit ve Şeffaf */
-            backdrop-filter: blur(10px); /* Arka planı bulanıklaştır */
-            border: 1px solid rgba(0, 255, 127, 0.3); /* Yarı şeffaf neon kenar */
-            box-shadow: 0 4px 30px rgba(0, 255, 127, 0.1); /* Hafif neon gölge */
-            transition: all 0.3s ease;
+            background-color: rgba(17, 24, 39, 0.6); /* Antrasit ve Daha Saydam */
+            backdrop-filter: blur(15px); /* Daha güçlü bulanıklık */
+            border: 1px solid rgba(0, 255, 127, 0.4); /* Yarı şeffaf neon kenar */
+            border-radius: 2.5rem; /* Daha oval köşeler */
+            box-shadow: 0 8px 60px rgba(0, 255, 127, 0.2); /* Daha büyük neon gölge */
+            transition: all 0.5s ease-in-out;
         }
         .glass-panel:hover {
+            background-color: rgba(22, 30, 48, 0.7); /* Hover'da hafif renk değişimi */
             border-color: #00FF7F;
-            box-shadow: 0 4px 40px rgba(0, 255, 127, 0.3);
+            box-shadow: 0 8px 80px rgba(0, 255, 127, 0.5);
+            transform: translateY(-8px); /* Daha belirgin kalkma */
         }
 
         /* Input ve Textarea Stil Düzenlemeleri (Tailwind override) */
@@ -113,11 +137,11 @@
         input[type="date"],
         textarea,
         select {
-            background-color: rgba(31, 41, 55, 0.8) !important; /* Antrasit ve şeffaf */
+            background-color: rgba(31, 41, 55, 0.7) !important; /* Antrasit ve daha şeffaf */
             color: #fff !important;
-            border: 1px solid rgba(75, 85, 99, 0.6) !important; /* Daha yumuşak border */
-            padding: 0.75rem 1rem !important;
-            border-radius: 0.5rem !important;
+            border: 1px solid rgba(75, 85, 99, 0.5) !important; /* Daha yumuşak border */
+            padding: 1rem 1.25rem !important; /* Daha büyük padding */
+            border-radius: 1.5rem !important; /* Daha oval köşeler */
         }
         input[type="text"]:focus,
         input[type="email"]:focus,
@@ -127,58 +151,46 @@
         select:focus {
             outline: none !important;
             border-color: #00FF7F !important; /* Neon yeşil focus border */
-            box-shadow: 0 0 0 2px rgba(0, 255, 127, 0.3) !important; /* Neon glow focus */
+            box-shadow: 0 0 0 3px rgba(0, 255, 127, 0.4) !important; /* Daha belirgin neon glow focus */
         }
         input[type="file"] {
             color: #ccc;
-            padding: 0.5rem 0;
+            padding: 0.75rem 0;
         }
         /* Admin paneli özel arka plan */
         .admin-section-bg {
             background-color: rgba(17, 24, 39, 0.8) !important; /* Daha koyu antrasit ve şeffaf */
             border: 1px solid #00FF7F; /* Neon border */
-            box-shadow: 0 0 25px rgba(0, 255, 127, 0.3); /* Hafif gölge */
+            box-shadow: 0 0 30px rgba(0, 255, 127, 0.4); /* Daha büyük gölge */
+            border-radius: 2.5rem; /* Oval köşeler */
         }
 
         /* Mobil menü görünümü */
         .mobile-nav-active {
-            display: flex !important;
-            flex-direction: column;
-            position: absolute;
-            top: 4rem; /* Navigasyon yüksekliği kadar */
-            right: 0;
-            background-color: rgba(17, 24, 39, 0.95); /* Mobil menü arkaplanı (şeffaf) */
-            backdrop-filter: blur(10px);
-            width: 100%;
-            padding: 1rem;
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            border-bottom: 1px solid #00FF7F;
+            background-color: rgba(17, 24, 39, 0.98); /* Mobil menü arkaplanı (daha opak) */
+            backdrop-filter: blur(15px); /* Daha güçlü bulanıklık */
+            border-radius: 0 0 1.5rem 1.5rem; /* Alt köşelerde ovalleşme */
         }
         .mobile-nav-active a {
-            padding: 0.75rem 0;
-            text-align: center;
-            border-bottom: 1px solid rgba(75, 85, 99, 0.4); /* Menü öğeleri arası çizgi */
-        }
-        .mobile-nav-active a:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.5); /* Menü öğeleri arası çizgi */
         }
 
-        /* Cursor takip eden neon glow partikülleri (JS ile kontrol edilecek) */
+        /* Cursor takip eden neon glow partikülleri */
         .cursor-trail-dot {
             position: fixed;
-            background-color: rgba(0, 255, 127, 0.5); /* Neon yeşil */
+            background-color: rgba(0, 255, 127, 0.6); /* Daha belirgin neon yeşil */
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
-            animation: fadeInOut 1.5s forwards;
+            animation: fadeInOut 2s forwards; /* Daha uzun animasyon */
             z-index: 9999;
             transform: translate(-50%, -50%);
+            filter: blur(5px); /* Hafif bulanıklık */
         }
         @keyframes fadeInOut {
             0% { opacity: 0; transform: scale(0); }
-            20% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.5); }
+            20% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(0.6); }
         }
     </style>
 </head>
@@ -192,8 +204,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <a href="#" class="block w-auto h-12"> 
-                        <img src="logo.png" alt="LCL Logo" class="max-h-full object-contain glow">
+                    <a href="#" class="block w-auto h-16"> <img src="logo.png" alt="LCL Logo" class="max-h-full object-contain glow">
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8" id="desktop-nav">
@@ -219,7 +230,7 @@
         </div>
     </nav>
 
-    <section class="hero-gradient text-white py-20 min-h-screen flex items-center relative matrix-bg">
+    <section class="hero-gradient text-white py-20 min-h-screen flex items-center relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between w-full">
             <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left hidden-on-load animate-fade-in-up">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6 font-orbitron leading-tight text-white glow">LOCKED CO LABS</h1>
