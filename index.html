@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locked Co Labs - Geleceği Kodlayan Yapay Zekâ Laboratuvarı</title>
+    <title>Locked Co Labs - Ultra Fütüristik Portfolyo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=IBM+Plex+Mono:wght@300;400;500&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Temel Stil Ayarları */
         body {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Rajdhani', sans-serif;
             scroll-behavior: smooth;
             background-color: #000; /* Dark Mode */
-            color: #fff;
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
-            position: relative;
-            /* Uzay Temalı Arka Plan - Yüksek çözünürlüklü ve genel bir görsel seçtim */
-            background-image: url('https://images.unsplash.com/photo-1534790566855-4cb788d389ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+            color: #E0E0E0; /* Hafif gri metin */
+            overflow-x: hidden;
+            transition: background-image 1.5s ease-in-out; /* Arka plan geçiş animasyonu */
             background-size: cover;
             background-attachment: fixed; /* Parallax benzeri etki */
-            background-position: center;
+            background-position: center center;
+            position: relative; /* ::before için referans */
         }
 
-        /* Ana Arka Plan Overlay (Daha derin karanlık ve bulanıklık) */
+        /* Ana Arka Plan Overlay (Genel koyuluk ve bulanıklık) */
         body::before {
             content: '';
             position: fixed;
@@ -30,77 +29,47 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Daha koyu saydam siyah katman */
-            backdrop-filter: blur(10px); /* Daha belirgin bulanıklık */
+            background-color: rgba(0, 0, 0, 0.88); /* Daha koyu ve opak overlay */
+            backdrop-filter: blur(12px); /* Daha güçlü bulanıklık */
             z-index: -1;
         }
         
-        /* Neon Yeşil Tonları ve Mor Geçişler */
+        /* Neon Yeşil Tonları (Sadece logoda ve ince vurgularda) */
         .text-neon-green { color: #00FF7F; }
         .bg-neon-green { background-color: #00FF7F; }
         .hover\:bg-neon-green-light:hover { background-color: #39FF14; }
         .border-neon-green { border-color: #00FF7F; }
         
-        /* Glow Efektleri (Daha yoğun) */
-        .glow {
-            text-shadow: 0 0 12px #00FF7F, 0 0 25px #00FF7F, 0 0 40px rgba(0, 255, 127, 0.8);
+        /* Logo Glow Efekti (Daha rafine) */
+        .logo-glow {
+            filter: drop-shadow(0 0 8px #00FF7F) drop-shadow(0 0 15px rgba(0, 255, 127, 0.7));
+            transition: filter 0.3s ease-in-out;
         }
-        .glow-on-hover:hover {
-            box-shadow: 0 0 25px #00FF7F, 0 0 50px rgba(0, 255, 127, 0.8);
-        }
-        .card-glow:hover {
-            box-shadow: 0 0 40px rgba(0, 255, 127, 0.9), 0 0 70px rgba(0, 255, 127, 0.6);
-            border-color: #39FF14;
-            transform: translateY(-8px); /* Hafif yukarı kalkma */
+        .logo-glow:hover {
+            filter: drop-shadow(0 0 12px #39FF14) drop-shadow(0 0 25px rgba(57, 255, 20, 0.9));
         }
 
         /* Fütüristik Fontlar */
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+        .font-exo2 { font-family: 'Exo 2', sans-serif; }
 
-        /* Arka Plan Efektleri - Dinamik Veri Akışı (Hero Section) */
-        .hero-section-bg {
-            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(17,17,17,0.6) 100%);
-            border-bottom: 1px solid rgba(0, 255, 127, 0.5);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        /* Matrix tarzı desen */
-        .hero-section-bg::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="transparent"/><path d="M0 0 L50 100 L100 0 Z" fill="rgba(0,255,127,0.07)"/></svg>');
-            background-size: 80px 80px; /* Desenin yoğunluğu */
-            opacity: 0.15;
-            animation: flow-pattern 45s linear infinite; /* Daha yavaş akış */
-            z-index: -1;
-        }
-        @keyframes flow-pattern {
-            from { background-position: 0 0; }
-            to { background-position: 100% 100%; }
-        }
-
-        /* Sayfa yüklenirken "veri yükleniyor" efekti */
+        /* Yükleme Ekranı Animasyonu */
         .loading-animation {
-            animation: pulse-loading 1.5s infinite alternate;
+            animation: pulse-loading 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
         }
         @keyframes pulse-loading {
-            0% { opacity: 0.6; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.1); }
+            0%, 100% { opacity: 0.8; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
-        /* Scroll ile beliren bloklar (Daha yumuşak ve belirgin) */
+        /* Scroll ile beliren bloklar (Daha akıcı) */
         .hidden-on-load {
             opacity: 0;
-            transform: translateY(60px); /* Daha fazla kayma */
+            transform: translateY(80px); /* Daha belirgin kayma */
         }
         .animate-fade-in-up {
-            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; /* Daha profesyonel easing */
+            animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Akıcı easing */
         }
         @keyframes fadeInUp {
             to {
@@ -108,7 +77,7 @@
                 transform: translateY(0);
             }
         }
-        /* Her blok için farklı gecikme */
+        /* Gecikmeler */
         .animate-delay-1 { animation-delay: 0.2s; }
         .animate-delay-2 { animation-delay: 0.4s; }
         .animate-delay-3 { animation-delay: 0.6s; }
@@ -116,20 +85,56 @@
         .animate-delay-5 { animation-delay: 1.0s; }
         .animate-delay-6 { animation-delay: 1.2s; }
 
-        /* Yarı Saydam Oval Kayan Pencereler (Ana Bileşenler) */
+        /* Yarı Saydam Oval Pencereler ("Glassmorphism" efekti) */
         .glass-panel {
-            background-color: rgba(17, 24, 39, 0.5); /* Antrasit ve Daha Saydam */
-            backdrop-filter: blur(20px); /* Daha güçlü bulanıklık */
-            border: 1px solid rgba(0, 255, 127, 0.5); /* Yarı şeffaf neon kenar */
-            border-radius: 3rem; /* Daha yuvarlak ve oval köşeler */
-            box-shadow: 0 10px 80px rgba(0, 255, 127, 0.25); /* Daha büyük neon gölge */
-            transition: all 0.6s ease-in-out;
+            background-color: rgba(30, 30, 40, 0.4); /* Koyu gri ve daha şeffaf */
+            backdrop-filter: blur(25px); /* Daha güçlü bulanıklık */
+            border: 1px solid rgba(80, 80, 80, 0.3); /* İnce, yumuşak border */
+            border-radius: 2.5rem; /* Oval köşeler */
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.3); /* Yumuşak gölge */
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .glass-panel:hover {
-            background-color: rgba(22, 30, 48, 0.6); /* Hover'da hafif renk değişimi */
-            border-color: #00FF7F;
-            box-shadow: 0 10px 100px rgba(0, 255, 127, 0.6);
-            transform: translateY(-12px); /* Daha belirgin kalkma */
+            background-color: rgba(40, 40, 50, 0.5); /* Hover'da hafif opaklık */
+            border-color: rgba(120, 120, 120, 0.5);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px); /* Hafif yukarı kalkma */
+        }
+
+        /* Buton Stilleri */
+        .btn-primary {
+            background-color: #00FF7F;
+            color: #000;
+            padding: 1rem 2.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 255, 127, 0.4);
+        }
+        .btn-primary:hover {
+            background-color: #39FF14;
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.6);
+            transform: translateY(-3px);
+        }
+        .btn-secondary {
+            border: 1px solid #707070; /* Daha nötr bir border */
+            color: #E0E0E0; /* Beyazımsı metin */
+            padding: 1rem 2.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease-in-out;
+            background-color: transparent;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(50, 50, 50, 0.3);
+            border-color: #00FF7F; /* Hover'da neon yeşil border */
+            color: #00FF7F; /* Hover'da neon yeşil metin */
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(0, 255, 127, 0.4);
         }
 
         /* Input ve Textarea Stil Düzenlemeleri (Tailwind override) */
@@ -139,12 +144,13 @@
         input[type="date"],
         textarea,
         select {
-            background-color: rgba(31, 41, 55, 0.7) !important;
-            color: #fff !important;
-            border: 1px solid rgba(75, 85, 99, 0.6) !important;
-            padding: 1rem 1.5rem !important; /* Daha büyük padding */
+            background-color: rgba(31, 41, 55, 0.5) !important; /* Daha şeffaf input */
+            color: #E0E0E0 !important;
+            border: 1px solid rgba(100, 100, 100, 0.4) !important;
+            padding: 1.2rem 1.5rem !important; /* Daha büyük padding */
             border-radius: 2rem !important; /* Daha oval köşeler */
             font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
         }
         input[type="text"]:focus,
         input[type="email"]:focus,
@@ -154,79 +160,97 @@
         select:focus {
             outline: none !important;
             border-color: #00FF7F !important;
-            box-shadow: 0 0 0 4px rgba(0, 255, 127, 0.5) !important; /* Daha belirgin neon glow focus */
+            box-shadow: 0 0 0 4px rgba(0, 255, 127, 0.5) !important;
         }
         input[type="file"] {
-            color: #ccc;
+            color: #E0E0E0;
             padding: 0.75rem 0;
             font-family: 'Rajdhani', sans-serif;
-        }
-        /* Admin paneli özel arka plan */
-        .admin-section-bg {
-            background-color: rgba(17, 24, 39, 0.7) !important;
-            border: 1px solid #00FF7F;
-            box-shadow: 0 0 40px rgba(0, 255, 127, 0.5);
-            border-radius: 3rem; /* Oval köşeler */
         }
 
         /* Mobil menü görünümü */
         .mobile-nav-active {
-            background-color: rgba(17, 24, 39, 0.98);
+            background-color: rgba(17, 24, 39, 0.95);
             backdrop-filter: blur(15px);
-            border-radius: 0 0 2rem 2rem; /* Alt köşelerde ovalleşme */
+            border-radius: 0 0 2rem 2rem;
             padding: 2rem;
+            position: absolute; /* Mobil menünün navigasyonun altında açılması için */
+            left: 0;
+            width: 100%;
         }
         .mobile-nav-active a {
             padding: 1rem 0;
             border-bottom: 1px solid rgba(75, 85, 99, 0.5);
+            text-align: center;
+        }
+        .mobile-nav-active a:last-child {
+            border-bottom: none;
         }
 
-        /* Cursor takip eden neon glow partikülleri (JS ile kontrol edilecek) */
+        /* Cursor takip eden neon glow partikülleri */
         .cursor-trail-dot {
             position: fixed;
-            background-color: rgba(0, 255, 127, 0.7); /* Daha belirgin neon yeşil */
+            background-color: rgba(0, 255, 127, 0.7);
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
-            animation: fadeInOut 2.5s forwards; /* Daha uzun animasyon */
+            animation: fadeInOut 2.5s forwards;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            filter: blur(6px); /* Hafif bulanıklık */
+            filter: blur(6px);
         }
         @keyframes fadeInOut {
             0% { opacity: 0; transform: scale(0); }
-            20% { opacity: 1; transform: scale(1.5); } /* Daha büyük başlangıç */
+            20% { opacity: 1; transform: scale(1.5); }
             100% { opacity: 0; transform: scale(0.7); }
+        }
+
+        /* Scroll için kaydırma çubuğu stilizasyonu */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00FF7F;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39FF14;
         }
     </style>
 </head>
-<body class="bg-black">
+<body class="bg-black" data-bg-image="https://images.unsplash.com/photo-1534790566855-4cb788d389ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
     <div id="loading-overlay" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50 transition-opacity duration-700">
         <div class="text-neon-green text-6xl font-orbitron loading-animation">LCL</div>
         <p class="text-gray-400 mt-6 text-2xl font-rajdhani">Veri Akışı Sağlanıyor...</p>
     </div>
 
-    <nav class="bg-black bg-opacity-70 backdrop-filter backdrop-blur-xl border-b border-neon-green sticky top-0 z-20">
+    <nav class="bg-black bg-opacity-70 backdrop-filter backdrop-blur-xl border-b border-gray-700 sticky top-0 z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center"> <div class="flex items-center">
-                    <a href="#" class="block w-auto h-16 mr-4"> <img src="logo.png" alt="LCL Logo" class="max-h-full object-contain glow">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="#" class="block w-auto h-16 mr-4"> 
+                        <img src="logo.png" alt="LCL Logo" class="max-h-full object-contain logo-glow">
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8" id="desktop-nav">
-                    <a href="#" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-xl tracking-wide">ANA SAYFA</a>
-                    <a href="#about" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-xl tracking-wide">HAKKIMIZDA</a>
-                    <a href="#portfolio" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-xl tracking-wide">PROJELER</a>
-                    <a href="#admin" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-xl tracking-wide">ODAK PANELİ</a>
-                    <a href="#contact" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-xl tracking-wide">İLETİŞİM</a>
+                    <a href="#hero" class="text-white hover:text-neon-green transition-all font-rajdhani text-xl tracking-wide">ANA SAYFA</a>
+                    <a href="#about" class="text-white hover:text-neon-green transition-all font-rajdhani text-xl tracking-wide">HAKKIMIZDA</a>
+                    <a href="#portfolio" class="text-white hover:text-neon-green transition-all font-rajdhani text-xl tracking-wide">PROJELER</a>
+                    <a href="#admin" class="text-white hover:text-neon-green transition-all font-rajdhani text-xl tracking-wide">ODAK PANELİ</a>
+                    <a href="#contact" class="text-white hover:text-neon-green transition-all font-rajdhani text-xl tracking-wide">İLETİŞİM</a>
                 </div>
                 <button class="md:hidden flex items-center text-white focus:outline-none" id="mobile-menu-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 hover:text-neon-green transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
             <div id="mobile-menu" class="hidden md:hidden">
-                <a href="#" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">ANA SAYFA</a>
+                <a href="#hero" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">ANA SAYFA</a>
                 <a href="#about" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">HAKKIMIZDA</a>
                 <a href="#portfolio" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">PROJELER</a>
                 <a href="#admin" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">ODAK PANELİ</a>
@@ -235,31 +259,33 @@
         </div>
     </nav>
 
-    <section class="hero-section-bg text-white py-20 min-h-screen flex items-center relative">
+    <section id="hero" class="hero-section-bg text-white py-20 min-h-screen flex items-center relative"
+        data-bg-image="https://images.unsplash.com/photo-1534790566855-4cb788d389ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between w-full">
             <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left hidden-on-load animate-fade-in-up">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 font-orbitron leading-tight text-white glow">LOCKED CO LABS</h1>
-                <p class="text-2xl md:text-3xl mb-10 text-neon-green leading-relaxed font-rajdhani tracking-wide">Geleceği Kodlayan Yapay Zekâ Laboratuvarı</p>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 font-orbitron leading-tight text-white logo-glow">LOCKED CO LABS</h1>
+                <p class="text-2xl md:text-3xl mb-10 text-gray-300 leading-relaxed font-rajdhani tracking-wide font-exo2">Geleceği Kodlayan Yapay Zekâ Laboratuvarı</p>
                 <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <a href="#portfolio" class="bg-neon-green text-black px-10 py-4 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover inline-block text-xl">PROJELERİMİZİ KEŞFET</a>
-                    <a href="#admin" class="border border-neon-green text-neon-green px-10 py-4 rounded-full font-bold hover:bg-neon-green transition-all hover:text-black glow-on-hover inline-block text-xl">GİRİŞ YAP</a>
+                    <a href="#portfolio" class="btn-primary text-xl">PROJELERİMİZİ KEŞFET</a>
+                    <a href="#admin" class="btn-secondary text-xl">GİRİŞ YAP</a>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center hidden-on-load animate-fade-in-up animate-delay-1">
-                <img src="logo.png" alt="LCL Logo" class="w-80 md:w-96 lg:w-[400px] h-auto max-w-full rounded-lg shadow-xl glow" />
+                <img src="logo.png" alt="LCL Logo" class="w-80 md:w-96 lg:w-[400px] h-auto max-w-full rounded-lg shadow-xl logo-glow" />
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-20 bg-transparent border-t border-neon-green">
+    <section id="about" class="py-20 bg-transparent border-t border-gray-700"
+        data-bg-image="https://images.unsplash.com/photo-1518066000714-cdcd82531032?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-neon-green mb-12 font-orbitron hidden-on-load animate-fade-in-up">HAKKIMIZDA</h2>
+            <h2 class="text-4xl font-bold text-center text-white mb-12 font-orbitron hidden-on-load animate-fade-in-up">HAKKIMIZDA</h2>
             <div class="glass-panel p-10 rounded-lg mb-12 hidden-on-load animate-fade-in-up animate-delay-1">
-                <p class="text-center text-gray-200 max-w-4xl mx-auto text-xl leading-relaxed font-rajdhani">
+                <p class="text-center text-gray-200 max-w-4xl mx-auto text-xl leading-relaxed font-rajdhani font-exo2">
                     Locked Co Labs, yapay zekâ, inovasyon, teknoloji ve insan odaklı gelişim alanında öncülük eden bir AR-GE/teknoloji laboratuvarıdır.
                     Vizyonumuz, teknolojinin sınırlarını zorlayarak geleceği kodlamak ve insanlığın faydasına sürdürülebilir çözümler üretmektir.
                 </p>
-                <p class="text-center mt-8 text-white max-w-4xl mx-auto text-2xl font-semibold italic font-rajdhani">
+                <p class="text-center mt-8 text-white max-w-4xl mx-auto text-2xl font-semibold italic font-rajdhani font-exo2">
                     "İnovasyon bizim kodumuzda var."
                 </p>
             </div>
@@ -267,52 +293,54 @@
             <h3 class="text-3xl font-bold text-center text-white mb-10 font-orbitron hidden-on-load animate-fade-in-up animate-delay-2">EKİBİMİZ</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-8">
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">Teknoloji Lideri</h3>
-                    <p class="text-gray-300 font-rajdhani">Yapay Zeka ve Yenilikçi Çözümlerin mimarı, ekibi geleceğe taşıyor.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">Teknoloji Lideri</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Yapay Zeka ve Yenilikçi Çözümlerin mimarı, ekibi geleceğe taşıyor.</p>
                 </div>
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">Veri Bilimci</h3>
-                    <p class="text-gray-300 font-rajdhani">Büyük Veri Analitiği ve öngörülerle kararlarımızı yönlendiriyor.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">Veri Bilimci</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Büyük Veri Analitiği ve öngörülerle kararlarımızı yönlendiriyor.</p>
                 </div>
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-5">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">Geliştirici</h3>
-                    <p class="text-gray-300 font-rajdhani">Yazılım Mühendisliği ve sistem entegrasyonu konularında uzman.</p>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">Geliştirici</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Yazılım Mühendisliği ve sistem entegrasyonu konularında uzman.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="py-20 bg-transparent border-t border-neon-green">
+    <section id="portfolio" class="py-20 bg-transparent border-t border-gray-700"
+        data-bg-image="https://images.unsplash.com/photo-1541185799190-e696f8b9ee34?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-neon-green mb-4 font-orbitron hidden-on-load animate-fade-in-up">AKTİF PROJELER</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-rajdhani hidden-on-load animate-fade-in-up animate-delay-1">Yapay zeka ve inovasyon odaklı çözümlerimizle geleceği şekillendiriyoruz.</p>
+                <h2 class="text-4xl font-bold text-white mb-4 font-orbitron hidden-on-load animate-fade-in-up">AKTİF PROJELER</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-rajdhani font-exo2 hidden-on-load animate-fade-in-up animate-delay-1">Yapay zeka ve inovasyon odaklı çözümlerimizle geleceği şekillendiriyoruz.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-10" id="portfolio-items">
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-2">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">ODAK</h3>
-                    <p class="text-gray-300 font-rajdhani">Yapay Zeka Destekli Proje ve Görev Yönetim Sistemi. Verimli iş akışları için akıllı çözümler.</p>
-                    <button class="bg-neon-green text-black px-5 py-2.5 rounded-full font-bold text-md mt-6 hover:bg-neon-green-light transition-all glow-on-hover">DETAYLAR</button>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">ODAK</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Yapay Zeka Destekli Proje ve Görev Yönetim Sistemi. Verimli iş akışları için akıllı çözümler.</p>
+                    <button class="btn-primary text-md mt-6">DETAYLAR</button>
                 </div>
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">QUANTUM</h3>
-                    <p class="text-gray-300 font-rajdhani">Kuantum Hesaplama Araştırmaları. Yeni nesil işlem gücüyle karmaşık sorunlara çözümler.</p>
-                    <button class="bg-neon-green text-black px-5 py-2.5 rounded-full font-bold text-md mt-6 hover:bg-neon-green-light transition-all glow-on-hover">DETAYLAR</button>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">QUANTUM</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Kuantum Hesaplama Araştırmaları. Yeni nesil işlem gücüyle karmaşık sorunlara çözümler.</p>
+                    <button class="btn-primary text-md mt-6">DETAYLAR</button>
                 </div>
                 <div class="glass-panel p-8 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
-                    <h3 class="text-2xl font-bold text-neon-green mb-4 font-orbitron">NEXUS</h3>
-                    <p class="text-gray-300 font-rajdhani">Nesnelerin İnterneti (IoT) Platformu. Akıllı cihazların entegrasyonu ve veri analizi.</p>
-                    <button class="bg-neon-green text-black px-5 py-2.5 rounded-full font-bold text-md mt-6 hover:bg-neon-green-light transition-all glow-on-hover">DETAYLAR</button>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">NEXUS</h3>
+                    <p class="text-gray-300 font-rajdhani font-exo2">Nesnelerin İnterneti (IoT) Platformu. Akıllı cihazların entegrasyonu ve veri analizi.</p>
+                    <button class="btn-primary text-md mt-6">DETAYLAR</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="admin" class="py-20 bg-transparent border-t border-neon-green">
+    <section id="admin" class="py-20 bg-transparent border-t border-gray-700"
+        data-bg-image="https://images.unsplash.com/photo-1516131206192-eee4b9982701?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-neon-green mb-8 font-orbitron hidden-on-load animate-fade-in-up">ODAK PANELİ</h2>
+            <h2 class="text-4xl font-bold text-white text-center mb-8 font-orbitron hidden-on-load animate-fade-in-up">ODAK PANELİ</h2>
             <div class="max-w-2xl mx-auto admin-section-bg glass-panel p-10 rounded-lg hidden-on-load animate-fade-in-up animate-delay-1">
-                <p class="text-gray-400 text-center mb-6 font-rajdhani">Buradan yeni görev veya fikir/proje verilerini sisteme ekleyebilirsiniz.</p>
+                <p class="text-gray-400 text-center mb-6 font-rajdhani font-exo2">Buradan yeni görev veya fikir/proje verilerini sisteme ekleyebilirsiniz.</p>
                 <div class="mb-6">
                     <label for="apiKey" class="block text-gray-300 mb-2 font-rajdhani text-lg">API Anahtarı:</label>
                     <input type="password" id="apiKey" class="w-full px-4 py-3 rounded-lg" placeholder="API Anahtarınızı Girin">
@@ -374,40 +402,41 @@
                     <input type="text" id="folder_path" placeholder="cloud/projects/yeni_proje_adi" class="w-full px-4 py-3 rounded-lg mb-2">
                 </div>
                 
-                <button id="submitFormData" class="bg-neon-green text-black px-8 py-4 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover w-full mt-6 text-xl">
+                <button id="submitFormData" class="btn-primary text-xl w-full mt-6">
                     VERİYİ KAYDET
                 </button>
                 <div id="jsonOutput" class="mt-10 p-8 glass-panel rounded-lg hidden">
-                    <h3 class="text-neon-green font-bold mb-5 text-2xl font-orbitron">OLUŞTURULAN JSON VERİSİ:</h3>
+                    <h3 class="text-white font-bold mb-5 text-2xl font-orbitron">OLUŞTURULAN JSON VERİSİ:</h3>
                     <pre class="whitespace-pre-wrap text-base text-gray-200 p-6 bg-gray-800 rounded-lg overflow-x-auto"></pre>
-                    <button id="downloadJson" class="bg-gray-600 text-white px-6 py-3 rounded-lg mt-8 hover:bg-gray-700 transition-all text-base">JSON İNDİR</button>
-                    <p class="text-gray-500 text-sm mt-5 font-rajdhani">Not: Bu veri sadece tarayıcınızda oluşturulur. Gerçek bulut depolama entegrasyonu için sunucu tarafı kodlamaya ihtiyaç vardır.</p>
+                    <button id="downloadJson" class="btn-secondary text-base mt-8">JSON İNDİR</button>
+                    <p class="text-gray-500 text-sm mt-5 font-rajdhani font-exo2">Not: Bu veri sadece tarayıcınızda oluşturulur. Gerçek bulut depolama entegrasyonu için sunucu tarafı kodlamaya ihtiyaç vardır.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-20 bg-transparent border-t border-neon-green">
+    <section id="contact" class="py-20 bg-transparent border-t border-gray-700"
+        data-bg-image="https://images.unsplash.com/photo-1533682500078-be7c21f7c56d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-neon-green mb-8 font-orbitron hidden-on-load animate-fade-in-up">İLETİŞİM</h2>
+            <h2 class="text-4xl font-bold text-white text-center mb-8 font-orbitron hidden-on-load animate-fade-in-up">İLETİŞİM</h2>
             <form class="mt-8 max-w-xl mx-auto p-10 glass-panel rounded-lg hidden-on-load animate-fade-in-up animate-delay-1">
-                <label for="contactName" class="block mb-2 text-neon-green font-rajdhani text-lg">İsim:</label>
+                <label for="contactName" class="block mb-2 text-white font-rajdhani text-lg">İsim:</label>
                 <input type="text" id="contactName" class="w-full px-3 py-3 rounded-lg" required placeholder="Adınız Soyadınız" />
                 
-                <label for="contactEmail" class="block mb-2 mt-6 text-neon-green font-rajdhani text-lg">E-posta:</label>
+                <label for="contactEmail" class="block mb-2 mt-6 text-white font-rajdhani text-lg">E-posta:</label>
                 <input type="email" id="contactEmail" class="w-full px-3 py-3 rounded-lg" required placeholder="email@example.com" />
                 
-                <label for="contactMessage" class="block mb-2 mt-6 text-neon-green font-rajdhani text-lg">Mesaj:</label>
+                <label for="contactMessage" class="block mb-2 mt-6 text-white font-rajdhani text-lg">Mesaj:</label>
                 <textarea id="contactMessage" class="w-full px-3 py-3 rounded-lg" required rows="6" placeholder="Mesajınızı buraya yazın..."></textarea>
                 
-                <button type="submit" class="bg-neon-green hover:bg-neon-green-light text-black px-10 py-4 rounded-full font-bold mt-8 w-full glow-on-hover text-xl">
+                <button type="submit" class="btn-primary text-xl w-full mt-8">
                     GÖNDER
                 </button>
             </form>
             <div class="flex justify-center space-x-8 mt-12 hidden-on-load animate-fade-in-up animate-delay-2">
-                <a href="https://www.linkedin.com/company/lockedcolabs" target="_blank" class="text-white hover:text-neon-green transition-all glow" aria-label="LinkedIn"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                <a href="https://github.com/LockedCoLabs" target="_blank" class="text-white hover:text-neon-green transition-all glow" aria-label="GitHub"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.867-.013-1.7Z"/></svg></a>
-                <a href="https://twitter.com/LockedCoLabs" target="_blank" class="text-white hover:text-neon-green transition-all glow" aria-label="X (Twitter)"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.791-1.574 2.162-2.721-.951.564-2.005.974-3.127 1.195-.89-.941-2.16-1.536-3.593-1.536-2.71 0-4.911 2.201-4.911 4.911 0 .385.044.757.122 1.112-4.085-.205-7.712-2.152-10.138-5.117-.424.72-.667 1.558-.667 2.449 0 1.708.869 3.21 2.188 4.096-.807-.025-1.564-.247-2.22-.613v.062c0 2.38 1.696 4.368 3.946 4.82-.41.111-.843.17-1.288.17-.315 0-.62-.031-.918-.086.634 1.959 2.46 3.393 4.63 3.433-1.681 1.32-3.805 2.107-6.113 2.107-.398 0-.79-.023-1.175-.069 2.176 1.392 4.768 2.209 7.558 2.209 9.052 0 13.99-7.496 13.99-13.986 0-.214-.005-.426-.014-.637.961-.695 1.796-1.562 2.457-2.558z"/></svg></a>
+                <a href="https://www.linkedin.com/company/lockedcolabs" target="_blank" class="text-white hover:text-neon-green transition-all logo-glow" aria-label="LinkedIn"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                <a href="https://github.com/LockedCoLabs" target="_blank" class="text-white hover:text-neon-green transition-all logo-glow" aria-label="GitHub"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.867-.013-1.7Z"/></svg></a>
+                <a href="https://twitter.com/LockedCoLabs" target="_blank" class="text-white hover:text-neon-green transition-all logo-glow" aria-label="X (Twitter)"><svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.791-1.574 2.162-2.721-.951.564-2.005.974-3.127 1.195-.89-.941-2.16-1.536-3.593-1.536-2.71 0-4.911 2.201-4.911 4.911 0 .385.044.757.122 1.112-4.085-.205-7.712-2.152-10.138-5.117-.424.72-.667 1.558-.667 2.449 0 1.708.869 3.21 2.188 4.096-.807-.025-1.564-.247-2.22-.613v.062c0 2.38 1.696 4.368 3.946 4.82-.41.111-.843.17-1.288.17-.315 0-.62-.031-.918-.086.634 1.959 2.46 3.393 4.63 3.433-1.681 1.32-3.805 2.107-6.113 2.107-.398 0-.79-.023-1.175-.069 2.176 1.392 4.768 2.209 7.558 2.209 9.052 0 13.99-7.496 13.99-13.986 0-.214-.005-.426-.014-.637.961-.695 1.796-1.562 2.457-2.558z"/></svg></a>
             </div>
         </div>
     </section>
@@ -416,7 +445,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">ŞİRKET</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white font-orbitron">ŞİRKET</h3>
                     <ul class="space-y-2 font-rajdhani">
                         <li><a href="#about" class="text-gray-300 hover:text-white transition-all">Hakkımızda</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Kariyer</a></li>
@@ -424,7 +453,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">HİZMETLER</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white font-orbitron">HİZMETLER</h3>
                     <ul class="space-y-2 font-rajdhani">
                         <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-all">Web Tasarım</a></li>
                         <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-all">Yapay Zeka Çözümleri</a></li>
@@ -432,7 +461,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">YASAL</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white font-orbitron">YASAL</h3>
                     <ul class="space-y-2 font-rajdhani">
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Gizlilik Politikası</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Kullanım Şartları</a></li>
@@ -440,7 +469,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">İLETİŞİM</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white font-orbitron">İLETİŞİM</h3>
                     <ul class="space-y-2 font-rajdhani">
                         <li class="text-gray-300">info@lockedcolabs.com</li>
                         <li class="text-gray-300">+90 555 123 45 67</li>
@@ -479,7 +508,20 @@
             mobileMenu.classList.toggle('mobile-nav-active');
         });
 
-        // Yavaş kaydırma için bağlantılar
+        // Yavaş kaydırma ve Dinamik Arka Plan Geçişi
+        const sections = document.querySelectorAll('section[id]');
+        const body = document.body;
+        let lastScrollY = window.scrollY;
+        let isScrollingDown;
+
+        function updateBackground(sectionId) {
+            const currentSection = document.getElementById(sectionId);
+            if (currentSection && currentSection.dataset.bgImage) {
+                body.style.backgroundImage = `url('${currentSection.dataset.bgImage}')`;
+            }
+        }
+
+        // Menü tıklamalarında arka planı değiştir
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -490,14 +532,44 @@
                     mobileMenu.classList.remove('mobile-nav-active');
                 }
 
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
+                const targetId = this.getAttribute('href').substring(1); // # işaretini kaldır
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
                         behavior: 'smooth'
                     });
+                    updateBackground(targetId); // Tıklanan bölümün arka planını hemen ayarla
                 }
             });
         });
+
+        // Scroll olayında aktif bölümün arka planını değiştir
+        window.addEventListener('scroll', () => {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - window.innerHeight / 2 && window.scrollY < sectionTop + sectionHeight - window.innerHeight / 2) {
+                    currentSectionId = section.id;
+                }
+            });
+            if (currentSectionId && body.dataset.activeSection !== currentSectionId) {
+                body.dataset.activeSection = currentSectionId;
+                updateBackground(currentSectionId);
+            }
+        });
+        
+        // Sayfa yüklendiğinde ilk bölümün arka planını ayarla
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sections.length > 0) {
+                updateBackground(sections[0].id);
+            }
+            // ODAK Paneli dinamik form mantığını başlat
+            toggleFormFields();
+            loadPortfolioItems();
+        });
+
 
         // ODAK Paneli dinamik form mantığı
         const projectTypeSelect = document.getElementById('projectType');
@@ -512,23 +584,20 @@
             if (projectTypeSelect.value === 'task') {
                 taskFields.classList.remove('hidden');
                 ideaFields.classList.add('hidden');
-                // Zorunlulukları ayarla
                 document.getElementById('taskTitle').setAttribute('required', 'true');
                 document.getElementById('ideaTitle').removeAttribute('required');
             } else { // idea
                 taskFields.classList.add('hidden');
                 ideaFields.classList.remove('hidden');
-                // Zorunlulukları ayarla
                 document.getElementById('ideaTitle').setAttribute('required', 'true');
                 document.getElementById('taskTitle').removeAttribute('required');
             }
         }
 
         projectTypeSelect.addEventListener('change', toggleFormFields);
-        document.addEventListener('DOMContentLoaded', toggleFormFields); // Sayfa yüklendiğinde varsayılan olarak görev alanlarını göster
 
         submitFormDataBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Formun varsayılan submit davranışını engelle
+            e.preventDefault();
 
             let formData = {};
             const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '_');
@@ -577,28 +646,9 @@
                 URL.revokeObjectURL(url);
             };
 
-            // Gerçek API entegrasyonu ve bulut depolama yüklemesi burada yapılmalıdır.
             const apiKey = document.getElementById('apiKey').value;
             if (apiKey) {
-                // Örnek API çağrısı (gerçek bir API endpoint'i ve doğrulama gerektirir)
                 console.log(`Veri API'ye gönderiliyor: ${JSON.stringify(formData)} ile Anahtar: ${apiKey}`);
-                // fetch('https://your-gcs-upload-api.com/upload', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         'Authorization': `Bearer ${apiKey}`
-                //     },
-                //     body: JSON.stringify(formData)
-                // })
-                // .then(response => response.json())
-                // .then(data => {
-                //     console.log('API Yanıtı:', data);
-                //     alert('Veri başarılı bir şekilde buluta yüklendi!');
-                // })
-                // .catch(error => {
-                //     console.error('Veri yüklenirken API hatası:', error);
-                //     alert('Veri yüklenirken bir hata oluştu. Konsolu kontrol edin.');
-                // });
                 alert('Veri başarıyla JSON olarak hazırlandı! Bulut depolama yükleme özelliği şu an sadece görseldir, gerçek bir API entegrasyonu gereklidir.');
             } else {
                 alert('API Anahtarı girmediniz. Veri sadece tarayıcınızda hazırlandı.');
@@ -606,53 +656,50 @@
         });
 
         // API entegrasyonu (Portfolyo öğelerini dinamik olarak yüklemek için placeholder)
-        const API_URL = 'https://your-project-data-api.com'; // Proje verilerini çekeceğiniz gerçek API endpoint'i
+        const API_URL = 'https://your-project-data-api.com';
         
         async function loadPortfolioItems() {
-            // Eğer gerçek bir API'den proje çekecekseniz aşağıdaki yorum satırını kaldırın ve alttaki sabit HTML'i silin.
+            // Gerçek API'den proje çekecekseniz bu yorum satırını kaldırın ve alttaki sabit HTML'i silin.
             /*
             try {
-                const response = await fetch(`${API_URL}/projects`); // API'den projeleri çek
+                const response = await fetch(`${API_URL}/projects`);
                 if (!response.ok) {
                     throw new Error(`HTTP hata: ${response.status}`);
                 }
                 const projects = await response.json();
                 const portfolioContainer = document.getElementById('portfolio-items');
                 portfolioContainer.innerHTML = projects.map(project => `
-                    <div class="glass-panel p-6 rounded-lg card-glow transition-all">
-                        <h3 class="text-2xl font-bold text-neon-green mb-2 font-orbitron">${project.title}</h3>
-                        <p class="text-gray-300 font-rajdhani">${project.description}</p>
-                        ${project.link ? `<a href="${project.link}" target="_blank" class="bg-neon-green text-black px-4 py-2 rounded-full font-bold text-sm mt-4 hover:bg-neon-green-light transition-all glow-on-hover inline-block">Detaylar</a>` : ''}
+                    <div class="glass-panel p-8 rounded-lg card-glow transition-all">
+                        <h3 class="text-2xl font-bold text-white mb-4 font-orbitron">${project.title}</h3>
+                        <p class="text-gray-300 font-rajdhani font-exo2">${project.description}</p>
+                        ${project.link ? `<a href="${project.link}" target="_blank" class="btn-primary text-md mt-6">DETAYLAR</a>` : ''}
                     </div>
                 `).join('');
             } catch (error) {
                 console.error('Portföy öğeleri yüklenirken hata:', error);
                 document.getElementById('portfolio-items').innerHTML = `
-                    <p class="text-center text-gray-500 col-span-full font-rajdhani">Projeler yüklenirken bir hata oluştu veya henüz proje bulunmamaktadır. Manuel eklenen projeler gösteriliyor.</p>
+                    <p class="text-center text-gray-500 col-span-full font-rajdhani font-exo2">Projeler yüklenirken bir hata oluştu veya henüz proje bulunmamaktadır. Manuel eklenen projeler gösteriliyor.</p>
                 `;
             }
             */
             // Şimdilik HTML içinde manuel olarak eklenmiş 3 örnek proje görünecektir.
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            loadPortfolioItems();
-            // Cursor glow efekti için aşağıdaki yorum satırını kaldırın
-            /*
-            document.addEventListener('mousemove', (e) => {
-                const dot = document.createElement('div');
-                dot.classList.add('cursor-trail-dot');
-                dot.style.left = `${e.clientX}px`;
-                dot.style.top = `${e.clientY}px`;
-                dot.style.width = `${Math.random() * 8 + 4}px`; // Rastgele boyut
-                dot.style.height = dot.style.width;
-                document.body.appendChild(dot);
-                setTimeout(() => {
-                    dot.remove();
-                }, 1500); // Animasyon süresinden biraz daha uzun
-            });
-            */
+        // Cursor glow efekti (Etkinleştirmek için yorum satırını kaldırın)
+        /*
+        document.addEventListener('mousemove', (e) => {
+            const dot = document.createElement('div');
+            dot.classList.add('cursor-trail-dot');
+            dot.style.left = `${e.clientX}px`;
+            dot.style.top = `${e.clientY}px`;
+            dot.style.width = `${Math.random() * 8 + 4}px`;
+            dot.style.height = dot.style.width;
+            document.body.appendChild(dot);
+            setTimeout(() => {
+                dot.remove();
+            }, 2500);
         });
+        */
     </script>
 </body>
 </html>
