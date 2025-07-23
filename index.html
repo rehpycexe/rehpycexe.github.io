@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locked Co Labs - Geleceği Kodlayan Yapay Zekâ Laboratuvarı</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=IBM+Plex+Mono:wght@300;400;500&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Temel Stil Ayarları */
         body {
@@ -14,6 +14,24 @@
             background-color: #000; /* Dark Mode */
             color: #fff;
             overflow-x: hidden; /* Yatay kaydırmayı engelle */
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1506443432701-6d77ae3fc63d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Uzay Temalı Arka Plan */
+            background-size: cover;
+            background-attachment: fixed; /* Parallax benzeri etki */
+            background-position: center;
+        }
+
+        /* Saydam Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Genel saydam siyah katman */
+            backdrop-filter: blur(5px); /* Arka planı hafif bulanıklaştır */
+            z-index: -1;
         }
         
         /* Neon Yeşil Tonları */
@@ -34,35 +52,24 @@
             border-color: #39FF14;
         }
 
-        /* Fütüristik Font */
+        /* Fütüristik Fontlar */
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
 
         /* Arka Plan Efektleri - Matrix */
         .matrix-bg {
             position: relative;
-            overflow: hidden;
+            z-index: 1; /* İçeriğin üstte kalması için */
         }
-        .matrix-bg::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(
-                    transparent 0, transparent 1px, 
-                    rgba(0,255,127,0.05) 1px, rgba(0,255,127,0.05) 2px
-                ),
-                linear-gradient(to bottom, transparent 50%, rgba(0,255,127,0.1) 100%);
-            pointer-events: none;
-            z-index: 0; /* İçeriğin arkasında kalması için */
-            animation: matrix-scroll 60s linear infinite; /* Yavaş akan efekt */
-            background-size: 100% 100px; /* Grid yoğunluğu */
+        /* Matrix efekti için ::before zaten body'de kullanıldı, bu sınıf sadece z-index için */
+
+        /* Sayfa yüklenirken "veri yükleniyor" efekti */
+        .loading-animation {
+            animation: pulse-loading 1.5s infinite alternate;
         }
-        @keyframes matrix-scroll {
-            from { background-position: 0 0; }
-            to { background-position: 0 100%; }
+        @keyframes pulse-loading {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
 
         /* Scroll ile beliren bloklar (Fade-in / Slide-up) */
@@ -84,6 +91,20 @@
         .animate-delay-2 { animation-delay: 0.4s; }
         .animate-delay-3 { animation-delay: 0.6s; }
         .animate-delay-4 { animation-delay: 0.8s; }
+        .animate-delay-5 { animation-delay: 1.0s; }
+
+        /* Saydam Kartlar ve Paneller */
+        .glass-panel {
+            background-color: rgba(17, 24, 39, 0.7); /* Antrasit ve Şeffaf */
+            backdrop-filter: blur(10px); /* Arka planı bulanıklaştır */
+            border: 1px solid rgba(0, 255, 127, 0.3); /* Yarı şeffaf neon kenar */
+            box-shadow: 0 4px 30px rgba(0, 255, 127, 0.1); /* Hafif neon gölge */
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            border-color: #00FF7F;
+            box-shadow: 0 4px 40px rgba(0, 255, 127, 0.3);
+        }
 
         /* Input ve Textarea Stil Düzenlemeleri (Tailwind override) */
         input[type="text"],
@@ -92,9 +113,9 @@
         input[type="date"],
         textarea,
         select {
-            background-color: #1a1a1a !important; /* Antrasit zemin */
+            background-color: rgba(31, 41, 55, 0.8) !important; /* Antrasit ve şeffaf */
             color: #fff !important;
-            border: 1px solid #333 !important; /* İnce border */
+            border: 1px solid rgba(75, 85, 99, 0.6) !important; /* Daha yumuşak border */
             padding: 0.75rem 1rem !important;
             border-radius: 0.5rem !important;
         }
@@ -110,23 +131,24 @@
         }
         input[type="file"] {
             color: #ccc;
-            padding: 0.5rem 0; /* Padding ekleyelim */
+            padding: 0.5rem 0;
         }
         /* Admin paneli özel arka plan */
         .admin-section-bg {
-            background-color: #0d0d0d !important; /* Daha koyu antrasit */
+            background-color: rgba(17, 24, 39, 0.8) !important; /* Daha koyu antrasit ve şeffaf */
             border: 1px solid #00FF7F; /* Neon border */
             box-shadow: 0 0 25px rgba(0, 255, 127, 0.3); /* Hafif gölge */
         }
 
-        /* Menü mobil görünümde */
+        /* Mobil menü görünümü */
         .mobile-nav-active {
-            display: flex !important; /* JS ile görünür hale gelecek */
+            display: flex !important;
             flex-direction: column;
             position: absolute;
             top: 4rem; /* Navigasyon yüksekliği kadar */
             right: 0;
-            background-color: #1a1a1a; /* Mobil menü arkaplanı */
+            background-color: rgba(17, 24, 39, 0.95); /* Mobil menü arkaplanı (şeffaf) */
+            backdrop-filter: blur(10px);
             width: 100%;
             padding: 1rem;
             z-index: 10;
@@ -136,152 +158,149 @@
         .mobile-nav-active a {
             padding: 0.75rem 0;
             text-align: center;
-            border-bottom: 1px solid #333; /* Menü öğeleri arası çizgi */
+            border-bottom: 1px solid rgba(75, 85, 99, 0.4); /* Menü öğeleri arası çizgi */
         }
         .mobile-nav-active a:last-child {
             border-bottom: none;
         }
 
-        /* Cursor takip eden neon glow (isteğe bağlı ve daha karmaşık bir JS ile sağlanır) */
-        /* Bu sadece CSS örneğidir, gerçek takip için JS gereklidir. */
-        .cursor-glow {
+        /* Cursor takip eden neon glow partikülleri (JS ile kontrol edilecek) */
+        .cursor-trail-dot {
             position: fixed;
-            pointer-events: none;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(0, 255, 127, 0.3);
+            background-color: rgba(0, 255, 127, 0.5); /* Neon yeşil */
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse-cursor 1.5s infinite alternate;
-            filter: blur(8px);
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeInOut 1.5s forwards;
             z-index: 9999;
-            opacity: 0; /* Varsayılan olarak gizli */
-            transition: opacity 0.3s ease;
+            transform: translate(-50%, -50%);
         }
-        @keyframes pulse-cursor {
-            from { transform: scale(0.8); opacity: 0.5; }
-            to { transform: scale(1.2); opacity: 0.8; }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0); }
+            20% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.5); }
         }
     </style>
 </head>
 <body class="bg-black">
     <div id="loading-overlay" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50 transition-opacity duration-700">
-        <div class="text-neon-green text-3xl font-orbitron animate-pulse">LCL</div>
-        <p class="text-gray-400 mt-4">Veriler Yükleniyor...</p>
+        <div class="text-neon-green text-5xl font-orbitron loading-animation">LCL</div>
+        <p class="text-gray-400 mt-4 text-xl font-rajdhani">Veri Akışı Sağlanıyor...</p>
     </div>
 
-    <nav class="bg-black border-b border-neon-green sticky top-0 z-20">
+    <nav class="bg-black bg-opacity-70 backdrop-filter backdrop-blur-lg border-b border-neon-green sticky top-0 z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
                     <a href="#" class="text-xl font-bold text-neon-green font-orbitron glow">LCL</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8" id="desktop-nav">
-                    <a href="#" class="text-white hover:text-neon-green transition-all hover:glow">Ana Sayfa</a>
-                    <a href="#about" class="text-white hover:text-neon-green transition-all hover:glow">Hakkımızda</a>
-                    <a href="#portfolio" class="text-white hover:text-neon-green transition-all hover:glow">Projeler</a>
-                    <a href="#admin" class="text-white hover:text-neon-green transition-all hover:glow">ODAK Paneli</a>
-                    <a href="#contact" class="text-white hover:text-neon-green transition-all hover:glow">İletişim</a>
+                    <a href="#" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-lg">ANA SAYFA</a>
+                    <a href="#about" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-lg">HAKKIMIZDA</a>
+                    <a href="#portfolio" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-lg">PROJELER</a>
+                    <a href="#admin" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-lg">ODAK PANELİ</a>
+                    <a href="#contact" class="text-white hover:text-neon-green transition-all hover:glow font-rajdhani text-lg">İLETİŞİM</a>
                 </div>
                 <button class="md:hidden flex items-center text-white focus:outline-none" id="mobile-menu-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
             <div id="mobile-menu" class="hidden md:hidden">
-                <a href="#" class="block text-white hover:text-neon-green px-4 py-2 transition-all">Ana Sayfa</a>
-                <a href="#about" class="block text-white hover:text-neon-green px-4 py-2 transition-all">Hakkımızda</a>
-                <a href="#portfolio" class="block text-white hover:text-neon-green px-4 py-2 transition-all">Projeler</a>
-                <a href="#admin" class="block text-white hover:text-neon-green px-4 py-2 transition-all">ODAK Paneli</a>
-                <a href="#contact" class="block text-white hover:text-neon-green px-4 py-2 transition-all">İletişim</a>
+                <a href="#" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">ANA SAYFA</a>
+                <a href="#about" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">HAKKIMIZDA</a>
+                <a href="#portfolio" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">PROJELER</a>
+                <a href="#admin" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">ODAK PANELİ</a>
+                <a href="#contact" class="block text-white hover:text-neon-green px-4 py-3 transition-all font-rajdhani text-lg">İLETİŞİM</a>
             </div>
         </div>
     </nav>
 
     <section class="hero-gradient text-white py-20 min-h-screen flex items-center relative matrix-bg">
-        <div class="absolute inset-0 z-0">
-            </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between w-full">
             <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left hidden-on-load animate-fade-in-up">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6 font-orbitron leading-tight text-white glow">LOCKED CO LABS</h1>
-                <p class="text-xl md:text-2xl mb-8 text-neon-green leading-relaxed">Geleceği Kodlayan Yapay Zekâ Laboratuvarı</p>
+                <p class="text-xl md:text-2xl mb-8 text-neon-green leading-relaxed font-rajdhani">Geleceği Kodlayan Yapay Zekâ Laboratuvarı</p>
                 <div class="space-x-4">
-                    <a href="#portfolio" class="bg-neon-green text-black px-8 py-3 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover inline-block">Projelerimizi Keşfet</a>
-                    <a href="#admin" class="border border-neon-green text-neon-green px-8 py-3 rounded-full font-bold hover:bg-neon-green transition-all hover:text-black glow-on-hover inline-block mt-4 md:mt-0">Giriş Yap</a>
+                    <a href="#portfolio" class="bg-neon-green text-black px-8 py-3 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover inline-block text-lg">PROJELERİMİZİ KEŞFET</a>
+                    <a href="#admin" class="border border-neon-green text-neon-green px-8 py-3 rounded-full font-bold hover:bg-neon-green transition-all hover:text-black glow-on-hover inline-block mt-4 md:mt-0 text-lg">GİRİŞ YAP</a>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center hidden-on-load animate-fade-in-up animate-delay-1">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3854cd78-67ae-47b7-af3d-dca60fcf0a54.png" alt="LCL Logo" class="w-64 md:w-96 rounded-lg shadow-xl glow" />
+                <img src="logo.png" alt="LCL Logo" class="w-64 md:w-96 rounded-lg shadow-xl glow" />
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-20 bg-gray-900 border-t border-neon-green">
+    <section id="about" class="py-20 bg-transparent border-t border-neon-green">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center text-neon-green mb-12 font-orbitron hidden-on-load animate-fade-in-up">HAKKIMIZDA</h2>
-            <p class="text-center mt-4 text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed hidden-on-load animate-fade-in-up animate-delay-1">
-                Locked Co Labs, yapay zekâ, inovasyon, teknoloji ve insan odaklı gelişim alanında öncülük eden bir AR-GE/teknoloji laboratuvarıdır.
-                Vizyonumuz, teknolojinin sınırlarını zorlayarak geleceği kodlamak ve insanlığın faydasına sürdürülebilir çözümler üretmektir.
-            </p>
-            <p class="text-center mt-6 text-white max-w-3xl mx-auto text-xl font-semibold italic hidden-on-load animate-fade-in-up animate-delay-2">
-                "İnovasyon bizim kodumuzda var."
-            </p>
+            <div class="glass-panel p-8 rounded-lg mb-12 hidden-on-load animate-fade-in-up animate-delay-1">
+                <p class="text-center text-gray-200 max-w-3xl mx-auto text-lg leading-relaxed font-rajdhani">
+                    Locked Co Labs, yapay zekâ, inovasyon, teknoloji ve insan odaklı gelişim alanında öncülük eden bir AR-GE/teknoloji laboratuvarıdır.
+                    Vizyonumuz, teknolojinin sınırlarını zorlayarak geleceği kodlamak ve insanlığın faydasına sürdürülebilir çözümler üretmektir.
+                </p>
+                <p class="text-center mt-6 text-white max-w-3xl mx-auto text-xl font-semibold italic font-rajdhani">
+                    "İnovasyon bizim kodumuzda var."
+                </p>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-                <div class="bg-gray-800 border border-neon-green p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
+            <h3 class="text-3xl font-bold text-center text-white mb-8 font-orbitron hidden-on-load animate-fade-in-up animate-delay-2">EKİBİMİZ</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
                     <h3 class="text-2xl font-bold text-neon-green mb-3 font-orbitron">Teknoloji Lideri</h3>
-                    <p class="text-gray-300">Yapay Zeka ve Yenilikçi Çözümlerin mimarı, ekibi geleceğe taşıyor.</p>
+                    <p class="text-gray-300 font-rajdhani">Yapay Zeka ve Yenilikçi Çözümlerin mimarı, ekibi geleceğe taşıyor.</p>
                 </div>
-                <div class="bg-gray-800 border border-neon-green p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
                     <h3 class="text-2xl font-bold text-neon-green mb-3 font-orbitron">Veri Bilimci</h3>
-                    <p class="text-gray-300">Büyük Veri Analitiği ve öngörülerle kararlarımızı yönlendiriyor.</p>
+                    <p class="text-gray-300 font-rajdhani">Büyük Veri Analitiği ve öngörülerle kararlarımızı yönlendiriyor.</p>
                 </div>
-                <div class="bg-gray-800 border border-neon-green p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-5">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-5">
                     <h3 class="text-2xl font-bold text-neon-green mb-3 font-orbitron">Geliştirici</h3>
-                    <p class="text-gray-300">Yazılım Mühendisliği ve sistem entegrasyonu konularında uzman.</p>
+                    <p class="text-gray-300 font-rajdhani">Yazılım Mühendisliği ve sistem entegrasyonu konularında uzman.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="py-20 bg-black border-t border-neon-green">
+    <section id="portfolio" class="py-20 bg-transparent border-t border-neon-green">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-neon-green mb-4 font-orbitron hidden-on-load animate-fade-in-up">AKTİF PROJELER</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg hidden-on-load animate-fade-in-up animate-delay-1">Yapay zeka ve inovasyon odaklı çözümlerimizle geleceği şekillendiriyoruz.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-rajdhani hidden-on-load animate-fade-in-up animate-delay-1">Yapay zeka ve inovasyon odaklı çözümlerimizle geleceği şekillendiriyoruz.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8" id="portfolio-items">
-                <div class="bg-gray-800 border border-neon-green rounded-lg p-6 card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-2">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-2">
                     <h3 class="text-2xl font-bold text-neon-green mb-2 font-orbitron">ODAK</h3>
-                    <p class="text-gray-300">Yapay Zeka Destekli Proje ve Görev Yönetim Sistemi. Verimli iş akışları için akıllı çözümler.</p>
+                    <p class="text-gray-300 font-rajdhani">Yapay Zeka Destekli Proje ve Görev Yönetim Sistemi. Verimli iş akışları için akıllı çözümler.</p>
                     <button class="bg-neon-green text-black px-4 py-2 rounded-full font-bold text-sm mt-4 hover:bg-neon-green-light transition-all glow-on-hover">Detaylar</button>
                 </div>
-                <div class="bg-gray-800 border border-neon-green rounded-lg p-6 card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-3">
                     <h3 class="text-2xl font-bold text-neon-green mb-2 font-orbitron">QUANTUM</h3>
-                    <p class="text-gray-300">Kuantum Hesaplama Araştırmaları. Yeni nesil işlem gücüyle karmaşık sorunlara çözümler.</p>
+                    <p class="text-gray-300 font-rajdhani">Kuantum Hesaplama Araştırmaları. Yeni nesil işlem gücüyle karmaşık sorunlara çözümler.</p>
                     <button class="bg-neon-green text-black px-4 py-2 rounded-full font-bold text-sm mt-4 hover:bg-neon-green-light transition-all glow-on-hover">Detaylar</button>
                 </div>
-                <div class="bg-gray-800 border border-neon-green rounded-lg p-6 card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
+                <div class="glass-panel p-6 rounded-lg card-glow transition-all hidden-on-load animate-fade-in-up animate-delay-4">
                     <h3 class="text-2xl font-bold text-neon-green mb-2 font-orbitron">NEXUS</h3>
-                    <p class="text-gray-300">Nesnelerin İnterneti (IoT) Platformu. Akıllı cihazların entegrasyonu ve veri analizi.</p>
+                    <p class="text-gray-300 font-rajdhani">Nesnelerin İnterneti (IoT) Platformu. Akıllı cihazların entegrasyonu ve veri analizi.</p>
                     <button class="bg-neon-green text-black px-4 py-2 rounded-full font-bold text-sm mt-4 hover:bg-neon-green-light transition-all glow-on-hover">Detaylar</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="admin" class="py-20 bg-black border-t border-neon-green">
+    <section id="admin" class="py-20 bg-transparent border-t border-neon-green">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-neon-green mb-8 font-orbitron hidden-on-load animate-fade-in-up">ODAK PANELI</h2>
+            <h2 class="text-4xl font-bold text-center text-neon-green mb-8 font-orbitron hidden-on-load animate-fade-in-up">ODAK PANELİ</h2>
             <div class="max-w-2xl mx-auto admin-section-bg p-8 rounded-lg hidden-on-load animate-fade-in-up animate-delay-1">
-                <p class="text-gray-400 text-center mb-6">Buradan yeni görev veya fikir/proje verilerini sisteme ekleyebilirsiniz.</p>
+                <p class="text-gray-400 text-center mb-6 font-rajdhani">Buradan yeni görev veya fikir/proje verilerini sisteme ekleyebilirsiniz.</p>
                 <div class="mb-4">
-                    <label for="apiKey" class="block text-gray-300 mb-2">API Anahtarı:</label>
+                    <label for="apiKey" class="block text-gray-300 mb-2 font-rajdhani">API Anahtarı:</label>
                     <input type="password" id="apiKey" class="w-full px-4 py-2 rounded-lg" placeholder="API Anahtarınızı Girin">
                 </div>
                 <div class="mb-6">
-                    <label for="projectType" class="block text-gray-300 mb-2">Veri Tipi Seçin:</label>
+                    <label for="projectType" class="block text-gray-300 mb-2 font-rajdhani">Veri Tipi Seçin:</label>
                     <select id="projectType" class="w-full px-4 py-2 rounded-lg">
                         <option value="task">🟢 Görev</option>
                         <option value="idea">🔵 Fikir / Proje</option>
@@ -289,30 +308,30 @@
                 </div>
 
                 <div id="taskFields" class="mb-6">
-                    <label for="taskTitle" class="block text-gray-300 mb-2">Başlık (Zorunlu):</label>
+                    <label for="taskTitle" class="block text-gray-300 mb-2 font-rajdhani">Başlık (Zorunlu):</label>
                     <input type="text" id="taskTitle" placeholder="Görevin Kısa Başlığı" class="w-full px-4 py-2 rounded-lg mb-2" required>
                     
-                    <label for="startDate" class="block text-gray-300 mb-2 mt-4">Başlangıç Tarihi (Opsiyonel):</label>
+                    <label for="startDate" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Başlangıç Tarihi (Opsiyonel):</label>
                     <input type="date" id="startDate" class="w-full px-4 py-2 rounded-lg mb-2">
                     
-                    <label for="endDate" class="block text-gray-300 mb-2 mt-4">Bitiş Tarihi (Opsiyonel):</label>
+                    <label for="endDate" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Bitiş Tarihi (Opsiyonel):</label>
                     <input type="date" id="endDate" class="w-full px-4 py-2 rounded-lg mb-2">
                     
-                    <label for="subtasks" class="block text-gray-300 mb-2 mt-4">Alt Görevler (Her satır bir görev):</label>
+                    <label for="subtasks" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Alt Görevler (Her satır bir görev):</label>
                     <textarea id="subtasks" placeholder="Alt görevleri buraya yazın (her biri yeni satırda)" class="w-full px-4 py-2 rounded-lg mb-2" rows="4"></textarea>
                 </div>
 
                 <div id="ideaFields" class="mb-6 hidden">
-                    <label for="ideaTitle" class="block text-gray-300 mb-2">Başlık (Zorunlu):</label>
+                    <label for="ideaTitle" class="block text-gray-300 mb-2 font-rajdhani">Başlık (Zorunlu):</label>
                     <input type="text" id="ideaTitle" placeholder="Fikir / Proje Başlığı" class="w-full px-4 py-2 rounded-lg mb-2" required>
                     
-                    <label for="goal" class="block text-gray-300 mb-2 mt-4">Hedef:</label>
+                    <label for="goal" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Hedef:</label>
                     <textarea id="goal" placeholder="Projenin/Fikrin ana hedefi nedir?" class="w-full px-4 py-2 rounded-lg mb-2" rows="4"></textarea>
                     
-                    <label for="tags" class="block text-gray-300 mb-2 mt-4">Etiketler (Virgülle ayırın):</label>
+                    <label for="tags" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Etiketler (Virgülle ayırın):</label>
                     <input type="text" id="tags" placeholder="Yapay Zeka, Kuantum, IoT, Yazılım" class="w-full px-4 py-2 rounded-lg mb-2">
                     
-                    <label for="priority" class="block text-gray-300 mb-2 mt-4">Öncelik:</label>
+                    <label for="priority" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Öncelik:</label>
                     <select id="priority" class="w-full px-4 py-2 rounded-lg mb-2">
                         <option value="Düşük">Düşük</option>
                         <option value="Orta">Orta</option>
@@ -320,7 +339,7 @@
                         <option value="Acil">Acil</option>
                     </select>
                     
-                    <label for="status" class="block text-gray-300 mb-2 mt-4">Durum:</label>
+                    <label for="status" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Durum:</label>
                     <select id="status" class="w-full px-4 py-2 rounded-lg mb-2">
                         <option value="Düşünce">Düşünce</option>
                         <option value="Planlama">Planlama</option>
@@ -330,41 +349,41 @@
                         <option value="İptal Edildi">İptal Edildi</option>
                     </select>
                     
-                    <label for="references_desc" class="block text-gray-300 mb-2 mt-4">Referanslar / Açıklama:</label>
+                    <label for="references_desc" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Referanslar / Açıklama:</label>
                     <textarea id="references_desc" placeholder="İlgili referans bağlantıları veya ek açıklamalar" class="w-full px-4 py-2 rounded-lg mb-2" rows="4"></textarea>
                     
-                    <label for="folder_path" class="block text-gray-300 mb-2 mt-4">Bulut Klasör Yolu:</label>
+                    <label for="folder_path" class="block text-gray-300 mb-2 mt-4 font-rajdhani">Bulut Klasör Yolu:</label>
                     <input type="text" id="folder_path" placeholder="cloud/projects/yeni_proje_adi" class="w-full px-4 py-2 rounded-lg mb-2">
                 </div>
                 
-                <button id="submitFormData" class="bg-neon-green text-black px-6 py-3 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover w-full mt-6">
-                    Veriyi Kaydet
+                <button id="submitFormData" class="bg-neon-green text-black px-6 py-3 rounded-full font-bold hover:bg-neon-green-light transition-all glow-on-hover w-full mt-6 text-lg">
+                    VERİYİ KAYDET
                 </button>
-                <div id="jsonOutput" class="mt-8 p-6 bg-gray-700 rounded-lg hidden border border-neon-green">
-                    <h3 class="text-neon-green font-bold mb-4 text-xl">Oluşturulan JSON Verisi:</h3>
+                <div id="jsonOutput" class="mt-8 p-6 glass-panel rounded-lg hidden">
+                    <h3 class="text-neon-green font-bold mb-4 text-xl font-orbitron">OLUŞTURULAN JSON VERİSİ:</h3>
                     <pre class="whitespace-pre-wrap text-sm text-gray-200 p-4 bg-gray-800 rounded-lg overflow-x-auto"></pre>
-                    <button id="downloadJson" class="bg-gray-600 text-white px-5 py-2 rounded-lg mt-6 hover:bg-gray-700 transition-all">JSON İndir</button>
-                    <p class="text-gray-500 text-xs mt-4">Not: Bu veri sadece tarayıcınızda oluşturulur. Gerçek bulut depolama entegrasyonu için sunucu tarafı kodlamaya ihtiyaç vardır.</p>
+                    <button id="downloadJson" class="bg-gray-600 text-white px-5 py-2 rounded-lg mt-6 hover:bg-gray-700 transition-all text-sm">JSON İNDİR</button>
+                    <p class="text-gray-500 text-xs mt-4 font-rajdhani">Not: Bu veri sadece tarayıcınızda oluşturulur. Gerçek bulut depolama entegrasyonu için sunucu tarafı kodlamaya ihtiyaç vardır.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-20 bg-gray-900 border-t border-neon-green">
+    <section id="contact" class="py-20 bg-transparent border-t border-neon-green">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center text-neon-green mb-8 font-orbitron hidden-on-load animate-fade-in-up">İLETİŞİM</h2>
-            <form class="mt-8 max-w-xl mx-auto p-8 border border-neon-green rounded-lg admin-section-bg hidden-on-load animate-fade-in-up animate-delay-1">
-                <label for="contactName" class="block mb-2 text-neon-green">İsim:</label>
+            <form class="mt-8 max-w-xl mx-auto p-8 glass-panel rounded-lg hidden-on-load animate-fade-in-up animate-delay-1">
+                <label for="contactName" class="block mb-2 text-neon-green font-rajdhani">İsim:</label>
                 <input type="text" id="contactName" class="w-full px-3 py-2 rounded-lg" required placeholder="Adınız Soyadınız" />
                 
-                <label for="contactEmail" class="block mb-2 mt-6 text-neon-green">E-posta:</label>
+                <label for="contactEmail" class="block mb-2 mt-6 text-neon-green font-rajdhani">E-posta:</label>
                 <input type="email" id="contactEmail" class="w-full px-3 py-2 rounded-lg" required placeholder="email@example.com" />
                 
-                <label for="contactMessage" class="block mb-2 mt-6 text-neon-green">Mesaj:</label>
+                <label for="contactMessage" class="block mb-2 mt-6 text-neon-green font-rajdhani">Mesaj:</label>
                 <textarea id="contactMessage" class="w-full px-3 py-2 rounded-lg" required rows="5" placeholder="Mesajınızı buraya yazın..."></textarea>
                 
-                <button type="submit" class="bg-neon-green hover:bg-neon-green-light text-black px-8 py-3 rounded-full font-bold mt-6 w-full glow-on-hover">
-                    Gönder
+                <button type="submit" class="bg-neon-green hover:bg-neon-green-light text-black px-8 py-3 rounded-full font-bold mt-6 w-full glow-on-hover text-lg">
+                    GÖNDER
                 </button>
             </form>
             <div class="flex justify-center space-x-6 mt-12 hidden-on-load animate-fade-in-up animate-delay-2">
@@ -375,43 +394,43 @@
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-white py-12 border-t border-gray-700">
+    <footer class="bg-gray-800 bg-opacity-70 text-white py-12 border-t border-gray-700 backdrop-filter backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">Şirket</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">ŞİRKET</h3>
+                    <ul class="space-y-2 font-rajdhani">
                         <li><a href="#about" class="text-gray-300 hover:text-white transition-all">Hakkımızda</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Kariyer</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Blog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">Hizmetler</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">HİZMETLER</h3>
+                    <ul class="space-y-2 font-rajdhani">
                         <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-all">Web Tasarım</a></li>
                         <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-all">Yapay Zeka Çözümleri</a></li>
                         <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-all">Veri Analitiği</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">Yasal</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">YASAL</h3>
+                    <ul class="space-y-2 font-rajdhani">
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Gizlilik Politikası</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Kullanım Şartları</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-all">Çerez Politikası</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">İletişim</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-xl font-bold mb-4 text-neon-green font-orbitron">İLETİŞİM</h3>
+                    <ul class="space-y-2 font-rajdhani">
                         <li class="text-gray-300">info@lockedcolabs.com</li>
                         <li class="text-gray-300">+90 555 123 45 67</li>
                         <li class="text-gray-300">İstanbul, Türkiye</li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400 font-rajdhani">
                 <p>© 2025 Locked Co Labs — Tüm Hakları Saklıdır.</p>
             </div>
         </div>
@@ -439,7 +458,7 @@
 
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('mobile-nav-active'); // Yeni mobil menü sınıfı
+            mobileMenu.classList.toggle('mobile-nav-active');
         });
 
         // Yavaş kaydırma için bağlantılar
@@ -541,7 +560,6 @@
             };
 
             // Gerçek API entegrasyonu ve bulut depolama yüklemesi burada yapılmalıdır.
-            // Bu sadece bir örnek. Sunucu tarafı bir API'ye ihtiyacınız olacak (örn: Node.js, Python Flask/Django, PHP vb.)
             const apiKey = document.getElementById('apiKey').value;
             if (apiKey) {
                 // Örnek API çağrısı (gerçek bir API endpoint'i ve doğrulama gerektirir)
@@ -573,7 +591,7 @@
         const API_URL = 'https://your-project-data-api.com'; // Proje verilerini çekeceğiniz gerçek API endpoint'i
         
         async function loadPortfolioItems() {
-            // Eğer gerçek bir API'den proje çekecekseniz aşağıdaki yorum satırını kaldırın
+            // Eğer gerçek bir API'den proje çekecekseniz aşağıdaki yorum satırını kaldırın ve alttaki sabit HTML'i silin.
             /*
             try {
                 const response = await fetch(`${API_URL}/projects`); // API'den projeleri çek
@@ -583,16 +601,16 @@
                 const projects = await response.json();
                 const portfolioContainer = document.getElementById('portfolio-items');
                 portfolioContainer.innerHTML = projects.map(project => `
-                    <div class="bg-gray-800 border border-neon-green rounded-lg p-6 card-glow transition-all">
+                    <div class="glass-panel p-6 rounded-lg card-glow transition-all">
                         <h3 class="text-2xl font-bold text-neon-green mb-2 font-orbitron">${project.title}</h3>
-                        <p class="text-gray-300">${project.description}</p>
+                        <p class="text-gray-300 font-rajdhani">${project.description}</p>
                         ${project.link ? `<a href="${project.link}" target="_blank" class="bg-neon-green text-black px-4 py-2 rounded-full font-bold text-sm mt-4 hover:bg-neon-green-light transition-all glow-on-hover inline-block">Detaylar</a>` : ''}
                     </div>
                 `).join('');
             } catch (error) {
                 console.error('Portföy öğeleri yüklenirken hata:', error);
                 document.getElementById('portfolio-items').innerHTML = `
-                    <p class="text-center text-gray-500 col-span-full">Projeler yüklenirken bir hata oluştu veya henüz proje bulunmamaktadır. Manuel eklenen projeler gösteriliyor.</p>
+                    <p class="text-center text-gray-500 col-span-full font-rajdhani">Projeler yüklenirken bir hata oluştu veya henüz proje bulunmamaktadır. Manuel eklenen projeler gösteriliyor.</p>
                 `;
             }
             */
@@ -600,20 +618,20 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            loadPortfolioItems(); // Portfolyo öğelerini yükle (şu an için sabit HTML)
-            // Cursor glow efektini eklemek isterseniz aşağıdaki kodu etkinleştirin ve CSS'teki opacity: 0'ı kaldırın
+            loadPortfolioItems();
+            // Cursor glow efekti için aşağıdaki yorum satırını kaldırın
             /*
-            const cursorGlow = document.createElement('div');
-            cursorGlow.classList.add('cursor-glow');
-            document.body.appendChild(cursorGlow);
-
             document.addEventListener('mousemove', (e) => {
-                cursorGlow.style.left = `${e.clientX}px`;
-                cursorGlow.style.top = `${e.clientY}px`;
-                cursorGlow.style.opacity = '1';
-            });
-            document.addEventListener('mouseleave', () => {
-                cursorGlow.style.opacity = '0';
+                const dot = document.createElement('div');
+                dot.classList.add('cursor-trail-dot');
+                dot.style.left = `${e.clientX}px`;
+                dot.style.top = `${e.clientY}px`;
+                dot.style.width = `${Math.random() * 8 + 4}px`; // Rastgele boyut
+                dot.style.height = dot.style.width;
+                document.body.appendChild(dot);
+                setTimeout(() => {
+                    dot.remove();
+                }, 1500); // Animasyon süresinden biraz daha uzun
             });
             */
         });
